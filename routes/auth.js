@@ -6,8 +6,9 @@ const { Router } = require('express');
 const { check } = require('express-validator');
 
 // importaciones internas
-const { login, googleSignIn } = require('../controllers/auth');
+const { login, googleSignIn, renewToken } = require('../controllers/auth');
 const { validarCampos } = require('../middlewares/validar-campos');
+const { validarJWT } = require('../middlewares/validar-jwt');
 
 
 // codigo
@@ -24,6 +25,7 @@ router.post('/google', [
     validarCampos
 ], googleSignIn);
 
+router.get('/renew', validarJWT, renewToken);
 
 
 // exports

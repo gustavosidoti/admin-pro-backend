@@ -30,7 +30,7 @@ router.get('/', validarJWT, getHospitales);
 router.post('/', [
     validarJWT,
     check('nombre', 'El nombre del hospital es necesario').not().notEmpty(),
-
+    validarCampos
 ], crearHospital);
 
 /* =================================== 
@@ -39,7 +39,9 @@ router.post('/', [
 */
 
 router.put('/:id', [
-
+    validarJWT,
+    check('nombre', 'El nombre del hospital es necesario').not().notEmpty(),
+    validarCampos
 ], actualizarHospital);
 
 /* =================================== 
@@ -47,7 +49,9 @@ router.put('/:id', [
    ===================================
 */
 
-router.delete('/:id', borrarHospital);
+router.delete('/:id', [
+    validarJWT
+], borrarHospital);
 
 
 // Exportamos el módulo
