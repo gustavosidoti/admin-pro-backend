@@ -106,10 +106,18 @@ const actualizarUsuario = async(req, res = response) => {
                 });
             }
         }
+        // Si no es usuario de google puedo moficar correo
+        if (!usuarioDB.google) {
+            // agrego email a campos sino existe el mail o viene actualizado
+            campos.email = email;
+        } else if (usuarioDB.email !== email) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Usuario de google no pueden cambiar su correo'
+            });
+        }
 
-        // agrego email a campos sino existe el mail o viene actualizado
 
-        campos.email = email;
 
         // actualizo en BD y devuelvo los datos actualizados
         const usuarioActualizado = await Usuario.findByIdAndUpdate(uid, campos, { new: true });
